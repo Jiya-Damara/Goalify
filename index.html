@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login/SignUp</title>
 
     <link rel="stylesheet" href="css/login.css">
     <!-- Icon library (needed for <i class="bx ...">) -->
@@ -38,6 +38,45 @@
                     <a href="#"><i class="bx bxl-linkedin" aria-label="Login with LinkedIn"></i></a>
                 </div>
             </form>
+        </div>
+
+        <div class="form-box register">
+            <form action="#" autocomplete="on">
+                <h1>Register</h1>
+                <div class="input-box">
+                    <input type="text" placeholder="Username" required autocomplete="username">
+                    <i class="bx bxs-user" aria-hidden="true"></i>
+                </div>
+                <div class="input-box">
+                    <input type="email" placeholder="Email" required autocomplete="email">
+                    <i class="bx bxs-envelope" aria-hidden="true"></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Password" required autocomplete="current-password">
+                    <i class="bx bxs-lock-alt" aria-hidden="true"></i>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <p>or register with social platforms</p>
+                <div class="social-icons">
+                    <a href="#"><i class="bx bxl-google" aria-label="Login with Google"></i></a>
+                    <a href="#"><i class="bx bxl-facebook" aria-label="Login with Facebook"></i></a>
+                    <a href="#"><i class="bx bxl-github" aria-label="Login with GitHub"></i></a>
+                    <a href="#"><i class="bx bxl-linkedin" aria-label="Login with LinkedIn"></i></a>
+                </div>
+            </form>
+        </div>
+
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome!</h1>
+                <p>Don't have an account?</p>
+                <button class="btn register-btn">Register</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back!</h1>
+                <p>Already have an account?</p>
+                <button class="btn login-btn">Login</button>
+            </div>
         </div>
     </div>
 </body>
