@@ -24,8 +24,8 @@ function setupPasswordToggle(inputId, toggleId) {
     });
 }
 
-setupPasswordToggle('login-password', 'toggle-password');
-setupPasswordToggle('register-password', 'toggle-password');
+setupPasswordToggle('login-password', 'toggle-login-password');
+setupPasswordToggle('register-password', 'toggle-register-password');
 
 // Local Storage for Authentication
 function getStoredUsers() {
@@ -33,7 +33,7 @@ function getStoredUsers() {
     return users ? JSON.parse(users) : []; // convert to array if exists
 }
 
-function saveUsers(user) {
+function saveUsers(users) {
     localStorage.setItem('users', JSON.stringify(users)); // convert to string and store
 }
 
