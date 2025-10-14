@@ -16,15 +16,15 @@
     
     <div class="container">
         <div class="form-box login">
-            <form action="#" autocomplete="on">
+            <form action="#" autocomplete="on" onsubmit="handleLogin(event)">
                 <h1>Login</h1>
                 <div class="input-box">
-                    <input type="text" placeholder="Username" required autocomplete="username">
-                    <i class="bx bxs-user" aria-hidden="true"></i>
+                    <input id="register-email" type="email" placeholder="Email" required autocomplete="email">
+                    <i class="bx bxs-envelope" aria-hidden="true"></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password" required autocomplete="current-password">
-                    <i class="bx bxs-lock-alt" aria-hidden="true"></i>
+                    <input id="login-password" type="password" placeholder="Password" required autocomplete="current-password">
+                    <i class="bx bx-show" id="toggle-password" aria-hidden="true"></i>
                 </div>
                 <div class="forgot-link">
                     <a href="#">Forgot Password?</a>
@@ -41,19 +41,19 @@
         </div>
 
         <div class="form-box register">
-            <form action="#" autocomplete="on">
+            <form action="#" autocomplete="on" onsubmit="handleRegister(event)">
                 <h1>Register</h1>
                 <div class="input-box">
-                    <input type="text" placeholder="Username" required autocomplete="username">
+                    <input id="register-username" type="text" placeholder="Username" required autocomplete="username">
                     <i class="bx bxs-user" aria-hidden="true"></i>
                 </div>
                 <div class="input-box">
-                    <input type="email" placeholder="Email" required autocomplete="email">
+                    <input id="register-email" type="email" placeholder="Email" required autocomplete="email">
                     <i class="bx bxs-envelope" aria-hidden="true"></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password" required autocomplete="current-password">
-                    <i class="bx bxs-lock-alt" aria-hidden="true"></i>
+                    <input id="register-password" type="password" placeholder="Password" required autocomplete="current-password">
+                    <i class="bx bx-show" id="toggle-password" aria-hidden="true"></i>
                 </div>
                 <button type="submit" class="btn">Register</button>
                 <p>or register with social platforms</p>
