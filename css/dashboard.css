@@ -1,0 +1,821 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(90deg, #e2e2e2, #c9d6ff);
+}
+
+/* ---------- HEADER ---------- */
+.dashboard-header {
+    width: 100%;
+    height: 70px;
+    background: #7494ec;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-header .left-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dashboard-header .logo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+.dashboard-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.dashboard-header .right-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dashboard-header .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dashboard-header .user-info i {
+    font-size: 32px;
+}
+
+.dashboard-header .user-info h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.dashboard-header .user-info p {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.icon-btn {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.icon-btn:hover {
+    background: #fff;
+    color: #7494ec;
+}
+
+/* ---------- MAIN SECTION - SINGLE UNIFIED CONTAINER ---------- */
+.dashboard-main {
+    height: calc(100vh - 70px);
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* ---------- GOAL SECTION (LEFT 40%) ---------- */
+.goal-section {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    overflow: hidden;
+}
+
+.goal-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.goal-calendar {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.calendar-left {
+    flex: 0 0 55%;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar .month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    margin-bottom: 20px;
+}
+
+.calendar .month .date {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.calendar .month i {
+    font-size: 20px;
+    color: #7494ec;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.calendar .month i:hover {
+    color: #5a7cd9;
+}
+
+.calendar .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.calendar .weekdays div {
+    text-align: center;
+    font-weight: 600;
+    color: #7494ec;
+    font-size: 12px;
+}
+
+.calendar .days {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.calendar .days .day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eee;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+    transition: 0.3s;
+    font-size: 13px;
+}
+
+.calendar .days .day:hover {
+    background: #7494ec;
+    color: #fff;
+}
+
+.calendar .days .prev-date,
+.calendar .days .next-date {
+    opacity: 0.3;
+}
+
+.calendar .days .today {
+    background: #c9d6ff;
+    font-weight: 600;
+}
+
+.calendar .days .active {
+    background: #7494ec;
+    color: #fff;
+    font-weight: 600;
+}
+
+.calendar .days .event {
+    position: relative;
+}
+
+.calendar .days .event::after {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: #7494ec;
+    border-radius: 50%;
+}
+
+.calendar .days .active.event::after {
+    background: #fff;
+}
+
+.calendar .goto-today {
+    display: flex;
+    gap: 8px;
+}
+
+.calendar .goto-today .goto {
+    flex: 1;
+    display: flex;
+    border: 2px solid #7494ec;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.calendar .goto-today .goto input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 8px 12px;
+    font-size: 13px;
+    background: #eee;
+}
+
+.calendar .goto-today .goto button,
+.calendar .goto-today .today-btn {
+    background: #7494ec;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+    font-size: 13px;
+}
+
+.calendar .goto-today .goto button:hover,
+.calendar .goto-today .today-btn:hover {
+    background: #5a7cd9;
+}
+
+.calendar .goto-today .today-btn {
+    border-radius: 8px;
+}
+
+.calendar-right {
+    flex: 0 0 45%;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-right .today-date {
+    margin-bottom: 15px;
+}
+
+.calendar-right .today-date .event-day {
+    font-size: 24px;
+    font-weight: 600;
+    color: #7494ec;
+}
+
+.calendar-right .today-date .event-date {
+    font-size: 14px;
+    color: #888;
+}
+
+.events {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.events .event {
+    background: #eee;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.events .event:hover {
+    background: #7494ec;
+    color: #fff;
+}
+
+.events .event .title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.events .event .title i {
+    color: #7494ec;
+    font-size: 10px;
+}
+
+.events .event:hover .title i {
+    color: #fff;
+}
+
+.events .event .event-title {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.events .event .event-time {
+    font-size: 12px;
+    color: #888;
+}
+
+.events .event:hover .event-time {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.events .no-event {
+    text-align: center;
+    color: #888;
+    padding: 30px 10px;
+    font-size: 14px;
+}
+
+.add-event {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    background: #7494ec;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(116, 148, 236, 0.5);
+    transition: 0.3s;
+}
+
+.add-event:hover {
+    background: #5a7cd9;
+    transform: scale(1.1);
+}
+
+.add-event-wrapper {
+    position: absolute;
+    bottom: 75px;
+    right: 20px;
+    width: 300px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s;
+}
+
+.add-event-wrapper.active {
+    max-height: 350px;
+}
+
+.add-event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #7494ec;
+    color: #fff;
+}
+
+.add-event-header .title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.add-event-header .close {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.add-event-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.add-event-body input {
+    padding: 10px 15px;
+    background: #eee;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 13px;
+}
+
+.add-event-footer {
+    padding: 0 15px 15px;
+}
+
+.add-event-footer .add-event-btn {
+    width: 100%;
+    padding: 10px;
+    background: #7494ec;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.add-event-footer .add-event-btn:hover {
+    background: #5a7cd9;
+}
+
+/* ---------- TODO SECTION (RIGHT 60%) ---------- */
+.todo-section {
+    flex: 0 0 60%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.todo-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin: 0;
+    padding: 25px;
+    font-weight: 600;
+}
+
+#todoContainer {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    padding: 0 25px 25px;
+    overflow: hidden;
+}
+
+.create-todo {
+    flex: 0 0 calc(50% - 10px);
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow-y: auto;
+}
+
+.create-todo h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.create-todo input[type="text"] {
+    width: 100%;
+    padding: 12px 18px;
+    background: #eee;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.create-todo input[type="text"]::placeholder {
+    color: #888;
+    font-weight: 400;
+}
+
+.create-todo h4 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.create-todo .options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.create-todo .options label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px;
+    background: #eee;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.create-todo .options label:hover {
+    background: #ddd;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    display: none;
+}
+
+.bubble {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 3px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bubble::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.bubble.business {
+    border-color: #6a1b9a;
+}
+
+.bubble.business::after {
+    background: #6a1b9a;
+}
+
+.bubble.personal {
+    border-color: #e91e63;
+}
+
+.bubble.personal::after {
+    background: #e91e63;
+}
+
+.bubble.extra-curricular {
+    border-color: #ff9800;
+}
+
+.bubble.extra-curricular::after {
+    background: #ff9800;
+}
+
+.bubble.improvement {
+    border-color: #03a9f4;
+}
+
+.bubble.improvement::after {
+    background: #03a9f4;
+}
+
+input:checked ~ .bubble::after {
+    width: 11px;
+    height: 11px;
+}
+
+.create-todo .options label div {
+    color: #333;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.create-todo .deadline {
+    margin-bottom: 15px;
+}
+
+.create-todo .deadline label {
+    display: block;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.create-todo .deadline input[type="date"] {
+    width: 100%;
+    padding: 12px 18px;
+    background: #eee;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #333;
+    font-weight: 500;
+}
+
+.create-todo input[type="submit"] {
+    width: 100%;
+    height: 45px;
+    background: #7494ec;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #fff;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.create-todo input[type="submit"]:hover {
+    background: #5a7cd9;
+}
+
+.todo-list {
+    flex: 0 0 calc(50% - 10px);
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow-y: auto;
+}
+
+.todo-list h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.todo-list .list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #eee;
+    padding: 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.todo-item label {
+    cursor: pointer;
+}
+
+.todo-item .bubble {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #7494ec;
+}
+
+.todo-item .bubble::after {
+    background: #7494ec;
+}
+
+.todo-item .todo-content {
+    flex: 1;
+}
+
+.todo-item .todo-content input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.todo-item.done .todo-content input {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.todo-item .deadline {
+    font-size: 12px;
+    color: #888;
+    background: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.todo-item .actions {
+    display: flex;
+    gap: 8px;
+}
+
+.todo-item .actions button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.todo-item .actions button:hover {
+    opacity: 0.8;
+}
+
+.todo-item .actions .edit {
+    background: #7494ec;
+}
+
+.todo-item .actions .delete {
+    background: #e74c3c;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media screen and (max-width: 1200px) {
+    .dashboard-main {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .goal-section,
+    .todo-section {
+        flex: none;
+    }
+
+    .goal-calendar {
+        flex-direction: column;
+    }
+
+    .calendar-left,
+    .calendar-right {
+        flex: none;
+    }
+    
+    #todoContainer {
+        flex-direction: column;
+    }
+    
+    .create-todo,
+    .todo-list {
+        flex: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-header {
+        padding: 0 20px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 24px;
+    }
+
+    .dashboard-header .user-info div {
+        display: none;
+    }
+
+    .dashboard-main {
+        padding: 15px;
+    }
+
+    .goal-section h2,
+    .todo-section h2 {
+        font-size: 24px;
+    }
+
+    .create-todo .options {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .dashboard-header .left-header h1 {
+        display: none;
+    }
+}
