@@ -72,17 +72,7 @@ Goalify/
 - Animated toggle between login and register forms
 - Input validation and password strength requirements
 - Forgot password functionality
-
-```
-### Login Page
-
-![Login Page](https://raw.githubusercontent.com/Jiya_Damara/Goalify/main/assets/screenshots/login.png)
-
-### Register Page
-
-![Register Page](https://raw.githubusercontent.com/Jiya-Damara/Goalify/main/assets/screenshots/register.png)
-```
-
+- 
 ---
 
 ### 2. Dashboard
@@ -98,12 +88,6 @@ Goalify/
 - Create tasks with categories
 - Set deadlines
 - Mark complete and edit tasks
-
-```
-### Dashboard
-C:\Users\HP\Desktop\WebDev_UCA_Prjct1\assets\screenshots\dashboard.png
-![Dashboard](https://raw.githubusercontent.com/Jiya-Damara/Goalify/main/assets/screenshots/dashboard.png)
-```
 
 ---
 
