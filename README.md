@@ -72,7 +72,7 @@ Goalify/
 - Animated toggle between login and register forms
 - Input validation and password strength requirements
 - Forgot password functionality
-- 
+
 ---
 
 ### 2. Dashboard
