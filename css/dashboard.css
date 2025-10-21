@@ -1,5 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
+:root {
+    --color-primary:  #8a70D6;
+    --color-danger: #ff7782;
+    --color-success: #41f1b6;
+    --color-warning: #ffbb55;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-info-light: #dce1eb;
+    --color-dark: #363949;
+    --color-light-one: #e9e3ff;  
+    --color-light-two: rgba(132, 139, 200, 0.18);;  
+    --color-primary-variant: #8a70D6;
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 0.8rem;
+    --border-radius-3: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+
+    --box-shadow: 0 2rem 3rem var(--color-light-two);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -100,9 +126,9 @@ body {
     gap: 20px;
 }
 
-/* ---------- GOAL SECTION (LEFT 40%) ---------- */
+/* ---------- GOAL SECTION (LEFT 50%) ---------- */
 .goal-section {
-    flex: 0 0 40%;
+    flex: 0 0 50%;
     display: flex;
     flex-direction: column;
     background: #fff;
@@ -304,60 +330,102 @@ body {
     color: #888;
 }
 
-.events {
-    flex: 1;
-    overflow-y: auto;
-}
-
 .events .event {
     background: #eee;
     padding: 12px;
     border-radius: 8px;
     margin-bottom: 8px;
-    cursor: pointer;
+    cursor: default;
     transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .events .event:hover {
-    background: #7494ec;
-    color: #fff;
+    background: #ddd;
 }
 
 .events .event .title {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
-    margin-bottom: 4px;
+    width: 100%;
 }
 
 .events .event .title i {
     color: #7494ec;
     font-size: 10px;
-}
-
-.events .event:hover .title i {
-    color: #fff;
+    margin-top: 4px;
+    flex-shrink: 0;
 }
 
 .events .event .event-title {
     font-weight: 600;
     font-size: 14px;
+    flex: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.4;
+    max-width: 100%;
 }
 
 .events .event .event-time {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.events .event .time-display {
     font-size: 12px;
     color: #888;
 }
 
-.events .event:hover .event-time {
-    color: rgba(255, 255, 255, 0.8);
+.events .event .event-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    width: 100%;
+    flex-wrap: wrap;
+    padding-right: 15px;
 }
 
-.events .no-event {
-    text-align: center;
-    color: #888;
-    padding: 30px 10px;
+.events .event .event-actions button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 14px;
+    color: #fff;
+    transition: 0.3s;
+    flex-shrink: 0;
+}
+
+.events .event .event-actions button:hover {
+    opacity: 0.8;
+}
+
+.events .event .event-actions .edit {
+    background: #7494ec;
+}
+
+.events .event .event-actions .done {
+    background: #27ae60;
+}
+
+.events .event .event-actions .delete {
+    background: #e74c3c;
+}
+
+.events .event.done .event-title {
+    text-decoration: line-through;
+    color: #888;
 }
 
 .add-event {
@@ -454,9 +522,17 @@ body {
     background: #5a7cd9;
 }
 
-/* ---------- TODO SECTION (RIGHT 60%) ---------- */
+/* ---------- TODO SECTION (RIGHT 50%) ---------- */
+input:not([type="radio"]):not([type="checkbox"]), button {
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: initial;
+}
+
 .todo-section {
-    flex: 0 0 60%;
+    flex: 0 0 50%;
     display: flex;
     flex-direction: column;
     background: #fff;
@@ -497,6 +573,7 @@ body {
 }
 
 .create-todo input[type="text"] {
+    display: block;
     width: 100%;
     padding: 12px 18px;
     background: #eee;
@@ -551,58 +628,72 @@ input[type="checkbox"] {
 }
 
 .bubble {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 3px solid;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    box-shadow: 0px 0px 4px #333;
 }
 
 .bubble::after {
-    content: '';
-    width: 0;
-    height: 0;
+    content: "";
+    display: block;
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+    background-color: #333;
+    box-shadow: 0px 0px 4px #333;
     border-radius: 50%;
-    transition: 0.3s;
+    transition: 0.2s ease-in-out;
 }
 
 .bubble.business {
     border-color: #6a1b9a;
-}
-
-.bubble.business::after {
-    background: #6a1b9a;
+    box-shadow: 0px 0px 4px #6a1b9a;
 }
 
 .bubble.personal {
     border-color: #e91e63;
-}
-
-.bubble.personal::after {
-    background: #e91e63;
+    box-shadow: 0px 0px 4px #e91e63;
 }
 
 .bubble.extra-curricular {
     border-color: #ff9800;
-}
-
-.bubble.extra-curricular::after {
-    background: #ff9800;
+    box-shadow: 0px 0px 4px #ff9800;
 }
 
 .bubble.improvement {
     border-color: #03a9f4;
+    box-shadow: 0px 0px 4px #03a9f4;
+}
+
+.bubble.business::after {
+    background-color: #6a1b9a;
+    box-shadow: 0px 0px 4px #6a1b9a;
+}
+
+.bubble.personal::after {
+    background-color: #e91e63;
+    box-shadow: 0px 0px 4px #e91e63;
+}
+
+.bubble.extra-curricular::after {
+    background-color: #ff9800;
+    box-shadow: 0px 0px 4px #ff9800;
 }
 
 .bubble.improvement::after {
-    background: #03a9f4;
+    background-color: #03a9f4;
+    box-shadow: 0px 0px 4px #03a9f4;
 }
 
 input:checked ~ .bubble::after {
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
+    opacity: 1;
 }
 
 .create-todo .options label div {
@@ -676,26 +767,30 @@ input:checked ~ .bubble::after {
 
 .todo-item {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    gap: 8px;
     background: #eee;
     padding: 12px;
     border-radius: 8px;
     transition: 0.3s;
 }
 
+.todo-item .top-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
 .todo-item label {
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .todo-item .bubble {
     width: 18px;
     height: 18px;
-    border: 2px solid #7494ec;
-}
-
-.todo-item .bubble::after {
-    background: #7494ec;
 }
 
 .todo-item .todo-content {
@@ -715,6 +810,14 @@ input:checked ~ .bubble::after {
 .todo-item.done .todo-content input {
     text-decoration: line-through;
     color: #888;
+}
+
+.todo-item .bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-left: 30px;
 }
 
 .todo-item .deadline {
@@ -761,11 +864,13 @@ input:checked ~ .bubble::after {
     .dashboard-main {
         flex-direction: column;
         overflow-y: auto;
+        height: auto;
     }
 
     .goal-section,
     .todo-section {
         flex: none;
+        width: 100%;
     }
 
     .goal-calendar {
@@ -775,6 +880,18 @@ input:checked ~ .bubble::after {
     .calendar-left,
     .calendar-right {
         flex: none;
+        width: 100%;
+    }
+    
+    /* Make calendar days taller on mobile */
+    .calendar .days .day {
+        min-height: 35px;
+        padding: 5px;
+    }
+    
+    /* Move add event button up on mobile */
+    .add-event {
+        bottom: 80px;
     }
     
     #todoContainer {
@@ -784,6 +901,7 @@ input:checked ~ .bubble::after {
     .create-todo,
     .todo-list {
         flex: none;
+        width: 100%;
     }
 }
 
@@ -793,29 +911,27 @@ input:checked ~ .bubble::after {
     }
 
     .dashboard-header h1 {
-        font-size: 24px;
-    }
-
-    .dashboard-header .user-info div {
-        display: none;
+        font-size: 22px;
     }
 
     .dashboard-main {
         padding: 15px;
+        gap: 15px;
     }
 
     .goal-section h2,
     .todo-section h2 {
-        font-size: 24px;
+        font-size: 22px;
     }
-
-    .create-todo .options {
-        grid-template-columns: 1fr;
+    
+    /* Increase calendar day height more on smaller screens */
+    .calendar .days .day {
+        min-height: 40px;
+        font-size: 14px;
     }
-}
-
-@media screen and (max-width: 500px) {
-    .dashboard-header .left-header h1 {
-        display: none;
+    
+    /* Position add button higher to avoid overlap */
+    .add-event {
+        bottom: 100px;
     }
 }

@@ -1,3 +1,23 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const username = localStorage.getItem("signedInUser");
+  const email = localStorage.getItem("userEmail");
+
+  if (!username || !email) {
+    // Redirect to login if not logged in
+    window.location.href = "index.html";
+  }
+
+  document.getElementById("username-display").innerText = username;
+  document.getElementById("email-display").innerText = email;
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  if (confirm("Are you sure you want to log out?")) {
+    localStorage.clear();  // or remove only specific keys
+    window.location.href = "index.html";
+  }
+});
+
 const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
   daysContainer = document.querySelector(".days"),
@@ -229,13 +249,19 @@ function updateEvents(date) {
       year === event.year
     ) {
       event.events.forEach((event) => {
-        events += `<div class="event">
+        const doneClass = event.done ? 'done' : '';
+        events += `<div class="event ${doneClass}" data-title="${event.title}">
             <div class="title">
-              <i class="fas fa-circle"></i>
-              <h3 class="event-title">${event.title}</h3>
+                <i class="fas fa-circle"></i>
+                <h3 class="event-title">${event.title}</h3>
             </div>
             <div class="event-time">
-              <span class="event-time">${event.time}</span>
+                <span class="time-display">${event.time}</span>
+                <div class="event-actions">
+                    <button class="edit material-symbols-outlined">edit</button>
+                    <button class="done material-symbols-outlined">done</button>
+                    <button class="delete material-symbols-outlined">delete</button>
+                </div>
             </div>
         </div>`;
       });
@@ -272,9 +298,6 @@ addEventTitle.addEventListener("input", (e) => {
 
 function defineProperty() {
   var osccred = document.createElement("div");
-  osccred.innerHTML =
-    "A Project By <a href='https://www.youtube.com/channel/UCiUtBDVaSmMGKxg1HYeK-BQ' target=_blank>Open Source Coding</a>";
-  osccred.style.position = "absolute";
   osccred.style.bottom = "0";
   osccred.style.right = "0";
   osccred.style.fontSize = "10px";
@@ -316,7 +339,7 @@ addEventSubmit.addEventListener("click", () => {
   const eventTitle = addEventTitle.value;
   const eventTimeFrom = addEventFrom.value;
   const eventTimeTo = addEventTo.value;
-  if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
+  if (eventTitle.trim() === "" || eventTimeFrom.trim() === "" || eventTimeTo.trim() === "") {
     alert("Please fill all the fields");
     return;
   }
@@ -358,10 +381,13 @@ addEventSubmit.addEventListener("click", () => {
     alert("Event already added");
     return;
   }
+
   const newEvent = {
     title: eventTitle,
     time: timeFrom + " - " + timeTo,
-  };
+    done: false
+};
+
   console.log(newEvent);
   console.log(activeDay);
   let eventAdded = false;
@@ -400,37 +426,91 @@ addEventSubmit.addEventListener("click", () => {
   }
 });
 
-//function to delete event when clicked on event
-eventsContainer.addEventListener("click", (e) => {
-  if (e.target.classList.contains("event")) {
-    if (confirm("Are you sure you want to delete this event?")) {
-      const eventTitle = e.target.children[0].children[1].innerHTML;
-      eventsArr.forEach((event) => {
+// Handle Done, Edit and Delete in goal events (like TODO)
+eventsContainer.addEventListener('click', (e) => {
+    const button = e.target.closest('button');
+    if (!button) return;
+
+    const parentEvent = button.closest('.event');
+    if (!parentEvent) return;
+
+    const eventTitle = parentEvent.getAttribute('data-title');
+
+    // Find the event in array
+    let targetEvent = null;
+    let targetDayObj = null;
+    
+    eventsArr.forEach((dayObj) => {
         if (
-          event.day === activeDay &&
-          event.month === month + 1 &&
-          event.year === year
+            dayObj.day === activeDay &&
+            dayObj.month === month + 1 &&
+            dayObj.year === year
         ) {
-          event.events.forEach((item, index) => {
-            if (item.title === eventTitle) {
-              event.events.splice(index, 1);
-            }
-          });
-          //if no events left in a day then remove that day from eventsArr
-          if (event.events.length === 0) {
-            eventsArr.splice(eventsArr.indexOf(event), 1);
-            //remove event class from day
-            const activeDayEl = document.querySelector(".day.active");
-            if (activeDayEl.classList.contains("event")) {
-              activeDayEl.classList.remove("event");
-            }
-          }
+            dayObj.events.forEach(ev => {
+                if (ev.title === eventTitle) {
+                    targetEvent = ev;
+                    targetDayObj = dayObj;
+                }
+            });
         }
-      });
-      updateEvents(activeDay);
+    });
+
+    if (!targetEvent) return;
+
+    // Edit event
+    if (button.classList.contains('edit')) {
+        const titleEl = parentEvent.querySelector('.event-title');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = targetEvent.title;
+        input.style.cssText = 'width: 100%; background: transparent; border: none; outline: none; font-size: 14px; font-weight: 600; color: #333;';
+        
+        titleEl.replaceWith(input);
+        input.focus();
+        input.select();
+
+        const saveEdit = () => {
+            const newTitle = input.value.trim();
+            if (newTitle && newTitle !== targetEvent.title) {
+                targetEvent.title = newTitle;
+                parentEvent.setAttribute('data-title', newTitle);
+            }
+            updateEvents(activeDay);
+        };
+
+        input.addEventListener('blur', saveEdit);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                saveEdit();
+            }
+        });
+        return;
     }
-  }
+
+    // Mark as done
+    if (button.classList.contains('done')) {
+        targetEvent.done = !targetEvent.done;
+        parentEvent.classList.toggle('done');
+        saveEvents();
+        return;
+    }
+
+    // Delete event
+    if (button.classList.contains('delete')) {
+        targetDayObj.events = targetDayObj.events.filter(ev => ev.title !== eventTitle);
+        
+        if (targetDayObj.events.length === 0) {
+            eventsArr.splice(eventsArr.indexOf(targetDayObj), 1);
+            const activeDayEl = document.querySelector(".day.active");
+            if (activeDayEl && activeDayEl.classList.contains("event")) {
+                activeDayEl.classList.remove("event");
+            }
+        }
+        updateEvents(activeDay);
+        return;
+    }
 });
+
 
 //function to save events in local storage
 function saveEvents() {
@@ -457,125 +537,146 @@ function convertTime(time) {
   return time;
 }
 
-window.addEventListener('load', () => {
-    todos = JSON.parse(localStorage.getItem('todos')) || [];
+window.addEventListener("load", () => {
+  todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-    const newTodoForm = document.querySelector('#new-todo-form');
+  const newTodoForm = document.querySelector("#new-todo-form");
 
+  newTodoForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-    newTodoForm.addEventListener('submit', e => {
-        e.preventDefault();
+    const todoContent = e.target.elements.content.value.trim();
 
-        const todo = {
-            content: e.target.elements.content.value,
-            category: e.target.elements.category.value,
-            deadline: e.target.elements.deadline.value,
-            done: false,
-            createdAt: new Date().getTime()
-        }
+if (!todoContent) {
+  alert("Please enter a task!");
+  return;
+}
 
-        todos.push(todo);
-        localStorage.setItem('todos', JSON.stringify(todos));
-        e.target.reset();
+const todo = {
+  content: todoContent,
+  category: e.target.elements.category.value,
+  deadline: e.target.elements.deadline.value,
+  done: false,
+  createdAt: new Date().getTime(),
+};
 
-        DisplayTodos();
-    })
+    todos.push(todo);
+    localStorage.setItem("todos", JSON.stringify(todos));
+    e.target.reset();
+
     DisplayTodos();
-})
+  });
+  DisplayTodos();
+});
 
 function DisplayTodos() {
-    const todoList = document.querySelector('#todo-list');
+  const todoList = document.querySelector("#todo-list");
 
-    todoList.innerHTML = '';
+  todoList.innerHTML = "";
 
-    todos.forEach(todo => {
-        const todoItem = document.createElement('div');
-        todoItem.classList.add('todo-item');
+  todos.forEach((todo) => {
+    const todoItem = document.createElement("div");
+    todoItem.classList.add("todo-item");
 
-        const label = document.createElement('label');
-        const input = document.createElement('input');
-        const span = document.createElement('span');
-        const content = document.createElement('div');
-        const actions = document.createElement('div');
-        const edit = document.createElement('button'); //
-        const deleteButton = document.createElement('button'); //
-        const deadline = document.createElement('div');
+    const topRow = document.createElement("div");
+    topRow.classList.add("top-row");
 
-        input.type = 'checkbox';
-        input.checked = todo.done;
-        span.classList.add('bubble');
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    const span = document.createElement("span");
+    const content = document.createElement("div");
+    
+    const bottomRow = document.createElement("div");
+    bottomRow.classList.add("bottom-row");
+    
+    const actions = document.createElement("div");
+    const edit = document.createElement("button");
+    const deleteButton = document.createElement("button");
+    const deadline = document.createElement("div");
 
+    input.type = "checkbox";
+    input.checked = todo.done;
+    span.classList.add("bubble");
+
+    if (todo.category) {
         switch (todo.category) {
             case 'study':
                 span.classList.add('business');
                 break;
-            case 'College Lectures':
+            case 'college':
                 span.classList.add('personal');
                 break;
-            case 'Extra-Curricular':
+            case 'extra':
                 span.classList.add('extra-curricular');
                 break;
-            case 'self-improvement':
+            case 'improvement':
                 span.classList.add('improvement');
                 break;
         }
+    }
 
-        content.classList.add('todo-content');
-        actions.classList.add('actions');
-        edit.classList.add('edit', 'material-symbols-outlined'); //
-        deleteButton.classList.add('delete', 'material-symbols-outlined');//
-        deadline.classList.add('deadline');
+    content.classList.add("todo-content");
+    actions.classList.add("actions");
+    edit.classList.add("edit", "material-symbols-outlined");
+    deleteButton.classList.add("delete", "material-symbols-outlined");
+    edit.innerHTML = "edit";
+    deleteButton.innerHTML = "delete";
 
-        content.innerHTML = `<input type = "text" value = "${todo.content}" readonly>`;
-        edit.innerHTML = 'Edit';
-        deleteButton.innerHTML = 'delete';
-        deadline.innerHTML = `Deadline: ${todo.deadline}`;
+    content.innerHTML = `<input type = "text" value = "${todo.content}" readonly>`;
+    deadline.classList.add("deadline");
+    deadline.innerHTML = `Deadline: ${todo.deadline}`;
 
-        label.appendChild(input);
-        label.appendChild(span);
-        actions.appendChild(edit);
-        actions.appendChild(deleteButton);
-        todoItem.appendChild(label);
-        todoItem.appendChild(content);
-        todoItem.appendChild(deadline);
-        todoItem.appendChild(actions);
+    label.appendChild(input);
+    label.appendChild(span);
+    topRow.appendChild(label);
+    topRow.appendChild(content);
+    
+    actions.appendChild(edit);
+    actions.appendChild(deleteButton);
+    bottomRow.appendChild(deadline);
+    bottomRow.appendChild(actions);
+    
+    todoItem.appendChild(topRow);
+    todoItem.appendChild(bottomRow);
 
-        todoList.appendChild(todoItem);
+    todoList.appendChild(todoItem);
 
-        if (todo.done) {
-            todoItem.classList.add('done');
-        }
+    if (todo.done) {
+        todoItem.classList.add("done");
+    }
 
-        input.addEventListener('click', e => {
-            todo.done = e.target.checked;
-            localStorage.setItem('todos', JSON.stringify(todos));
+    input.addEventListener("click", (e) => {
+      todo.done = e.target.checked;
+      localStorage.setItem("todos", JSON.stringify(todos));
 
-            if (todo.done) {
-                todoItem.classList.add('done');
-            }
-            else {
-                todoItem.classList.remove('done');
-            }
+      if (todo.done) {
+        todoItem.classList.add("done");
+      } else {
+        todoItem.classList.remove("done");
+      }
 
-            DisplayTodos();
-        });
-
-        edit.addEventListener('click', e => {
-            const input = content.querySelector('input');
-            input.removeAttribute('readonly');
-            input.focus();
-            input.addEventListener('blur', e => {
-                input.setAttribute('readonly', true);
-                todo.content = e.target.value;
-                localStorage.setItem('todos', JSON.stringify(todos));
-                DisplayTodos();
-            })
-        })
-
-        deleteButton.addEventListener('click', e => {
-            todos = todos.filter(t => t != todo);
-            localStorage.setItem('todos', JSON.stringify(todos));
-            DisplayTodos();
-        });
+      DisplayTodos();
     });
+
+    edit.addEventListener("click", (e) => {
+    const input = content.querySelector("input");
+    if (input.readOnly) {
+        input.readOnly = false;
+        input.focus();
+        input.select();
+        edit.innerHTML = "save";
+    } else {
+        input.readOnly = true;
+        todo.content = input.value;
+        localStorage.setItem("todos", JSON.stringify(todos));
+        edit.innerHTML = "edit";
+    }
+});
+
+    deleteButton.addEventListener("click", (e) => {
+      todos = todos.filter((t) => t != todo);
+      localStorage.setItem("todos", JSON.stringify(todos));
+      DisplayTodos();
+    });
+  });
 }
