@@ -73,7 +73,7 @@ Goalify/
 - Input validation and password strength requirements
 - Forgot password functionality
 
-```markdown
+```
 ### Login Page
 
 ![Login Page](https://raw.githubusercontent.com/Jiya_Damara/Goalify/main/assets/screenshots/login.png)
@@ -99,7 +99,7 @@ Goalify/
 - Set deadlines
 - Mark complete and edit tasks
 
-```markdown
+```
 ### Dashboard
 
 ![Dashboard](https://raw.githubusercontent.com/Jiya-Damara/Goalify/main/assets/screenshots/dashboard.png)
