@@ -59,9 +59,11 @@ body {
 }
 
 .dashboard-header .logo {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .dashboard-header h1 {
@@ -860,10 +862,17 @@ input:checked ~ .bubble::after {
 }
 
 /* ---------- RESPONSIVE ---------- */
+/* ---------- RESPONSIVE ---------- */
 @media screen and (max-width: 1200px) {
+    body {
+        overflow: auto; /* FIX: Allow scrolling */
+        height: auto;
+        min-height: 100vh;
+    }
+
     .dashboard-main {
         flex-direction: column;
-        overflow-y: auto;
+        overflow-y: visible; /* Change from auto to visible */
         height: auto;
     }
 
@@ -883,13 +892,11 @@ input:checked ~ .bubble::after {
         width: 100%;
     }
     
-    /* Make calendar days taller on mobile */
     .calendar .days .day {
         min-height: 35px;
         padding: 5px;
     }
     
-    /* Move add event button up on mobile */
     .add-event {
         bottom: 80px;
     }
@@ -907,11 +914,25 @@ input:checked ~ .bubble::after {
 
 @media screen and (max-width: 768px) {
     .dashboard-header {
-        padding: 0 20px;
+        padding: 0 15px;
     }
 
     .dashboard-header h1 {
-        font-size: 22px;
+        font-size: 20px;
+    }
+    
+    .dashboard-header .right-header {
+        gap: 8px;
+    }
+    
+    .dashboard-header .icon-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+    
+    .dashboard-header .user-info p {
+        display: none;
     }
 
     .dashboard-main {
@@ -924,14 +945,35 @@ input:checked ~ .bubble::after {
         font-size: 22px;
     }
     
-    /* Increase calendar day height more on smaller screens */
     .calendar .days .day {
         min-height: 40px;
         font-size: 14px;
     }
     
-    /* Position add button higher to avoid overlap */
     .add-event {
         bottom: 100px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .dashboard-header {
+        padding: 0 10px;
+    }
+    
+    .dashboard-header h1 {
+        font-size: 18px;
+    }
+    
+    .dashboard-header .logo {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .dashboard-header .left-header {
+        gap: 8px;
+    }
+    
+    .dashboard-header .user-info h3 {
+        font-size: 14px;
     }
 }
