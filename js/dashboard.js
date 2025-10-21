@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
   if (confirm("Are you sure you want to log out?")) {
-    localStorage.clear();  // or remove only specific keys
+    localStorage.clear(); // or remove only specific keys
     window.location.href = "index.html";
   }
 });
@@ -249,7 +249,7 @@ function updateEvents(date) {
       year === event.year
     ) {
       event.events.forEach((event) => {
-        const doneClass = event.done ? 'done' : '';
+        const doneClass = event.done ? "done" : "";
         events += `<div class="event ${doneClass}" data-title="${event.title}">
             <div class="title">
                 <i class="fas fa-circle"></i>
@@ -339,7 +339,11 @@ addEventSubmit.addEventListener("click", () => {
   const eventTitle = addEventTitle.value;
   const eventTimeFrom = addEventFrom.value;
   const eventTimeTo = addEventTo.value;
-  if (eventTitle.trim() === "" || eventTimeFrom.trim() === "" || eventTimeTo.trim() === "") {
+  if (
+    eventTitle.trim() === "" ||
+    eventTimeFrom.trim() === "" ||
+    eventTimeTo.trim() === ""
+  ) {
     alert("Please fill all the fields");
     return;
   }
@@ -385,8 +389,8 @@ addEventSubmit.addEventListener("click", () => {
   const newEvent = {
     title: eventTitle,
     time: timeFrom + " - " + timeTo,
-    done: false
-};
+    done: false,
+  };
 
   console.log(newEvent);
   console.log(activeDay);
@@ -427,90 +431,92 @@ addEventSubmit.addEventListener("click", () => {
 });
 
 // Handle Done, Edit and Delete in goal events (like TODO)
-eventsContainer.addEventListener('click', (e) => {
-    const button = e.target.closest('button');
-    if (!button) return;
+eventsContainer.addEventListener("click", (e) => {
+  const button = e.target.closest("button");
+  if (!button) return;
 
-    const parentEvent = button.closest('.event');
-    if (!parentEvent) return;
+  const parentEvent = button.closest(".event");
+  if (!parentEvent) return;
 
-    const eventTitle = parentEvent.getAttribute('data-title');
+  const eventTitle = parentEvent.getAttribute("data-title");
 
-    // Find the event in array
-    let targetEvent = null;
-    let targetDayObj = null;
-    
-    eventsArr.forEach((dayObj) => {
-        if (
-            dayObj.day === activeDay &&
-            dayObj.month === month + 1 &&
-            dayObj.year === year
-        ) {
-            dayObj.events.forEach(ev => {
-                if (ev.title === eventTitle) {
-                    targetEvent = ev;
-                    targetDayObj = dayObj;
-                }
-            });
+  // Find the event in array
+  let targetEvent = null;
+  let targetDayObj = null;
+
+  eventsArr.forEach((dayObj) => {
+    if (
+      dayObj.day === activeDay &&
+      dayObj.month === month + 1 &&
+      dayObj.year === year
+    ) {
+      dayObj.events.forEach((ev) => {
+        if (ev.title === eventTitle) {
+          targetEvent = ev;
+          targetDayObj = dayObj;
         }
+      });
+    }
+  });
+
+  if (!targetEvent) return;
+
+  // Edit event
+  if (button.classList.contains("edit")) {
+    const titleEl = parentEvent.querySelector(".event-title");
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = targetEvent.title;
+    input.style.cssText =
+      "width: 100%; background: transparent; border: none; outline: none; font-size: 14px; font-weight: 600; color: #333;";
+
+    titleEl.replaceWith(input);
+    input.focus();
+    input.select();
+
+    const saveEdit = () => {
+      const newTitle = input.value.trim();
+      if (newTitle && newTitle !== targetEvent.title) {
+        targetEvent.title = newTitle;
+        parentEvent.setAttribute("data-title", newTitle);
+      }
+      updateEvents(activeDay);
+    };
+
+    input.addEventListener("blur", saveEdit);
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        saveEdit();
+      }
     });
+    return;
+  }
 
-    if (!targetEvent) return;
+  // Mark as done
+  if (button.classList.contains("done")) {
+    targetEvent.done = !targetEvent.done;
+    parentEvent.classList.toggle("done");
+    saveEvents();
+    return;
+  }
 
-    // Edit event
-    if (button.classList.contains('edit')) {
-        const titleEl = parentEvent.querySelector('.event-title');
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = targetEvent.title;
-        input.style.cssText = 'width: 100%; background: transparent; border: none; outline: none; font-size: 14px; font-weight: 600; color: #333;';
-        
-        titleEl.replaceWith(input);
-        input.focus();
-        input.select();
+  // Delete event
+  if (button.classList.contains("delete")) {
+    targetDayObj.events = targetDayObj.events.filter(
+      (ev) => ev.title !== eventTitle
+    );
 
-        const saveEdit = () => {
-            const newTitle = input.value.trim();
-            if (newTitle && newTitle !== targetEvent.title) {
-                targetEvent.title = newTitle;
-                parentEvent.setAttribute('data-title', newTitle);
-            }
-            updateEvents(activeDay);
-        };
-
-        input.addEventListener('blur', saveEdit);
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                saveEdit();
-            }
-        });
-        return;
+    if (targetDayObj.events.length === 0) {
+      eventsArr.splice(eventsArr.indexOf(targetDayObj), 1);
+      const activeDayEl = document.querySelector(".day.active");
+      if (activeDayEl && activeDayEl.classList.contains("event")) {
+        activeDayEl.classList.remove("event");
+      }
     }
-
-    // Mark as done
-    if (button.classList.contains('done')) {
-        targetEvent.done = !targetEvent.done;
-        parentEvent.classList.toggle('done');
-        saveEvents();
-        return;
-    }
-
-    // Delete event
-    if (button.classList.contains('delete')) {
-        targetDayObj.events = targetDayObj.events.filter(ev => ev.title !== eventTitle);
-        
-        if (targetDayObj.events.length === 0) {
-            eventsArr.splice(eventsArr.indexOf(targetDayObj), 1);
-            const activeDayEl = document.querySelector(".day.active");
-            if (activeDayEl && activeDayEl.classList.contains("event")) {
-                activeDayEl.classList.remove("event");
-            }
-        }
-        updateEvents(activeDay);
-        return;
-    }
+    updateEvents(activeDay);
+    return;
+  }
 });
-
 
 //function to save events in local storage
 function saveEvents() {
@@ -547,18 +553,18 @@ window.addEventListener("load", () => {
 
     const todoContent = e.target.elements.content.value.trim();
 
-if (!todoContent) {
-  alert("Please enter a task!");
-  return;
-}
+    if (!todoContent) {
+      alert("Please enter a task!");
+      return;
+    }
 
-const todo = {
-  content: todoContent,
-  category: e.target.elements.category.value,
-  deadline: e.target.elements.deadline.value,
-  done: false,
-  createdAt: new Date().getTime(),
-};
+    const todo = {
+      content: todoContent,
+      category: e.target.elements.category.value,
+      deadline: e.target.elements.deadline.value,
+      done: false,
+      createdAt: new Date().getTime(),
+    };
 
     todos.push(todo);
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -585,10 +591,10 @@ function DisplayTodos() {
     const input = document.createElement("input");
     const span = document.createElement("span");
     const content = document.createElement("div");
-    
+
     const bottomRow = document.createElement("div");
     bottomRow.classList.add("bottom-row");
-    
+
     const actions = document.createElement("div");
     const edit = document.createElement("button");
     const deleteButton = document.createElement("button");
@@ -599,20 +605,20 @@ function DisplayTodos() {
     span.classList.add("bubble");
 
     if (todo.category) {
-        switch (todo.category) {
-            case 'study':
-                span.classList.add('business');
-                break;
-            case 'college':
-                span.classList.add('personal');
-                break;
-            case 'extra':
-                span.classList.add('extra-curricular');
-                break;
-            case 'improvement':
-                span.classList.add('improvement');
-                break;
-        }
+      switch (todo.category) {
+        case "study":
+          span.classList.add("business");
+          break;
+        case "college":
+          span.classList.add("personal");
+          break;
+        case "extra":
+          span.classList.add("extra-curricular");
+          break;
+        case "improvement":
+          span.classList.add("improvement");
+          break;
+      }
     }
 
     content.classList.add("todo-content");
@@ -630,19 +636,19 @@ function DisplayTodos() {
     label.appendChild(span);
     topRow.appendChild(label);
     topRow.appendChild(content);
-    
+
     actions.appendChild(edit);
     actions.appendChild(deleteButton);
     bottomRow.appendChild(deadline);
     bottomRow.appendChild(actions);
-    
+
     todoItem.appendChild(topRow);
     todoItem.appendChild(bottomRow);
 
     todoList.appendChild(todoItem);
 
     if (todo.done) {
-        todoItem.classList.add("done");
+      todoItem.classList.add("done");
     }
 
     input.addEventListener("click", (e) => {
@@ -659,19 +665,19 @@ function DisplayTodos() {
     });
 
     edit.addEventListener("click", (e) => {
-    const input = content.querySelector("input");
-    if (input.readOnly) {
+      const input = content.querySelector("input");
+      if (input.readOnly) {
         input.readOnly = false;
         input.focus();
         input.select();
         edit.innerHTML = "save";
-    } else {
+      } else {
         input.readOnly = true;
         todo.content = input.value;
         localStorage.setItem("todos", JSON.stringify(todos));
         edit.innerHTML = "edit";
-    }
-});
+      }
+    });
 
     deleteButton.addEventListener("click", (e) => {
       todos = todos.filter((t) => t != todo);

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    --color-primary:  #8a70D6;
+    --color-primary: #8a70D6;
     --color-danger: #ff7782;
     --color-success: #41f1b6;
     --color-warning: #ffbb55;
@@ -9,8 +9,9 @@
     --color-info-dark: #7d8da1;
     --color-info-light: #dce1eb;
     --color-dark: #363949;
-    --color-light-one: #e9e3ff;  
-    --color-light-two: rgba(132, 139, 200, 0.18);;  
+    --color-light-one: #e9e3ff;
+    --color-light-two: rgba(132, 139, 200, 0.18);
+    ;
     --color-primary-variant: #8a70D6;
     --color-dark-variant: #677483;
     --color-background: #f6f6f9;
@@ -63,7 +64,7 @@ body {
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .dashboard-header h1 {
@@ -525,7 +526,8 @@ body {
 }
 
 /* ---------- TODO SECTION (RIGHT 50%) ---------- */
-input:not([type="radio"]):not([type="checkbox"]), button {
+input:not([type="radio"]):not([type="checkbox"]),
+button {
     appearance: none;
     border: none;
     outline: none;
@@ -692,7 +694,7 @@ input[type="checkbox"] {
     box-shadow: 0px 0px 4px #03a9f4;
 }
 
-input:checked ~ .bubble::after {
+input:checked~.bubble::after {
     width: 10px;
     height: 10px;
     opacity: 1;
@@ -865,14 +867,16 @@ input:checked ~ .bubble::after {
 /* ---------- RESPONSIVE ---------- */
 @media screen and (max-width: 1200px) {
     body {
-        overflow: auto; /* FIX: Allow scrolling */
+        overflow: auto;
+        /* FIX: Allow scrolling */
         height: auto;
         min-height: 100vh;
     }
 
     .dashboard-main {
         flex-direction: column;
-        overflow-y: visible; /* Change from auto to visible */
+        overflow-y: visible;
+        /* Change from auto to visible */
         height: auto;
     }
 
@@ -891,20 +895,20 @@ input:checked ~ .bubble::after {
         flex: none;
         width: 100%;
     }
-    
+
     .calendar .days .day {
         min-height: 35px;
         padding: 5px;
     }
-    
+
     .add-event {
         bottom: 80px;
     }
-    
+
     #todoContainer {
         flex-direction: column;
     }
-    
+
     .create-todo,
     .todo-list {
         flex: none;
@@ -920,17 +924,17 @@ input:checked ~ .bubble::after {
     .dashboard-header h1 {
         font-size: 20px;
     }
-    
+
     .dashboard-header .right-header {
         gap: 8px;
     }
-    
+
     .dashboard-header .icon-btn {
         width: 35px;
         height: 35px;
         font-size: 18px;
     }
-    
+
     .dashboard-header .user-info p {
         display: none;
     }
@@ -944,12 +948,12 @@ input:checked ~ .bubble::after {
     .todo-section h2 {
         font-size: 22px;
     }
-    
+
     .calendar .days .day {
         min-height: 40px;
         font-size: 14px;
     }
-    
+
     .add-event {
         bottom: 100px;
     }
@@ -959,20 +963,20 @@ input:checked ~ .bubble::after {
     .dashboard-header {
         padding: 0 10px;
     }
-    
+
     .dashboard-header h1 {
         font-size: 18px;
     }
-    
+
     .dashboard-header .logo {
         width: 35px;
         height: 35px;
     }
-    
+
     .dashboard-header .left-header {
         gap: 8px;
     }
-    
+
     .dashboard-header .user-info h3 {
         font-size: 14px;
     }
