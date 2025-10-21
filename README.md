@@ -101,7 +101,7 @@ Goalify/
 
 ```
 ### Dashboard
-
+C:\Users\HP\Desktop\WebDev_UCA_Prjct1\assets\screenshots\dashboard.png
 ![Dashboard](https://raw.githubusercontent.com/Jiya-Damara/Goalify/main/assets/screenshots/dashboard.png)
 ```
 
