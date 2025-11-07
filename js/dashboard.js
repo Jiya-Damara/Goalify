@@ -1,15 +1,15 @@
+const username = localStorage.getItem("signedInUser");
+const email = localStorage.getItem("userEmail");
+
+if (!username || !email) window.location.href = "index.html";
+
+// inside DOMContentLoaded — only use for setting innerText
 document.addEventListener("DOMContentLoaded", () => {
-  const username = localStorage.getItem("signedInUser");
-  const email = localStorage.getItem("userEmail");
-
-  if (!username || !email) {
-    // Redirect to login if not logged in
-    window.location.href = "index.html";
-  }
-
   document.getElementById("username-display").innerText = username;
   document.getElementById("email-display").innerText = email;
 });
+
+const userKeyPrefix = email.replace(/[@.]/g, "_"); // make key safe for localStorage
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
   if (confirm("Are you sure you want to log out?")) {
@@ -519,16 +519,16 @@ eventsContainer.addEventListener("click", (e) => {
 
 //function to save events in local storage
 function saveEvents() {
-  localStorage.setItem("events", JSON.stringify(eventsArr));
+  localStorage.setItem(`${userKeyPrefix}_events`, JSON.stringify(eventsArr));
 }
 
 //function to get events from local storage
 function getEvents() {
   //check if events are already saved in local storage then return event else nothing
-  if (localStorage.getItem("events") === null) {
-    return;
+  const stored = localStorage.getItem(`${userKeyPrefix}_events`);
+  if (stored) {
+    eventsArr.push(...JSON.parse(stored));
   }
-  eventsArr.push(...JSON.parse(localStorage.getItem("events")));
 }
 
 function convertTime(time) {
@@ -543,7 +543,7 @@ function convertTime(time) {
 }
 
 window.addEventListener("load", () => {
-  todos = JSON.parse(localStorage.getItem("todos")) || [];
+  todos = JSON.parse(localStorage.getItem(`${userKeyPrefix}_todos`)) || [];
 
   const newTodoForm = document.querySelector("#new-todo-form");
 
@@ -566,7 +566,7 @@ window.addEventListener("load", () => {
     };
 
     todos.push(todo);
-    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem(`${userKeyPrefix}_todos`, JSON.stringify(todos));
     e.target.reset();
 
     DisplayTodos();
@@ -652,7 +652,7 @@ function DisplayTodos() {
 
     input.addEventListener("click", (e) => {
       todo.done = e.target.checked;
-      localStorage.setItem("todos", JSON.stringify(todos));
+      localStorage.setItem(`${userKeyPrefix}_todos`, JSON.stringify(todos));
 
       if (todo.done) {
         todoItem.classList.add("done");
@@ -673,14 +673,14 @@ function DisplayTodos() {
       } else {
         input.readOnly = true;
         todo.content = input.value;
-        localStorage.setItem("todos", JSON.stringify(todos));
+        localStorage.setItem(`${userKeyPrefix}_todos`, JSON.stringify(todos));
         edit.innerHTML = "edit";
       }
     });
 
     deleteButton.addEventListener("click", (e) => {
       todos = todos.filter((t) => t != todo);
-      localStorage.setItem("todos", JSON.stringify(todos));
+      localStorage.setItem(`${userKeyPrefix}_todos`, JSON.stringify(todos));
       DisplayTodos();
     });
   });
