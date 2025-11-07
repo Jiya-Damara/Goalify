@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
   if (confirm("Are you sure you want to log out?")) {
-    localStorage.clear(); // or remove only specific keys
     window.location.href = "index.html";
   }
 });
